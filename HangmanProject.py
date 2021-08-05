@@ -132,7 +132,7 @@ arms(body()["head"],body()[1])
 legs()
 '''
 
-def drawHangman():
+def drawHangman(onePart):
   if onePart == 0:
       head()
       onePart += 1
@@ -156,6 +156,7 @@ def search(array, userLetter, recurNum):
     else:
         for i in range(0, len(array)):
             if (array[i] == userLetter):
+                t.speed(0)
                 #print("The entered letter is present in the word.")
                 #print(array)
                 letter.pu()
@@ -166,10 +167,10 @@ def search(array, userLetter, recurNum):
                 pass
                 # this is where we are going to write out the letters
             elif (found != True) and (i == len(array)-1):
-                drawHangman()
+                return drawHangman(onePart+2)
                     # type the letter
         # i+=1
-        return search(array, userLetter, recurNum + 1)
+        return search(array, userLetter, recurNum)
 
 
 def main():
