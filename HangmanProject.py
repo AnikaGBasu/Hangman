@@ -16,10 +16,12 @@ global headypos
 global bodyxpos
 global bodyypos
 global human
-global j
+global onePart
 global found
+global a
 
-word = "puppy"
+onePart = 0
+word = "retro"
 
 numCorrectGuess = 0
 
@@ -130,17 +132,32 @@ arms(body()["head"],body()[1])
 legs()
 '''
 
+def drawHangman():
+  if onePart == 0:
+      head()
+      onePart += 1
+      print(onePart)
+  elif onePart == 1:
+      body(draw)
+      onePart += 1
+      print()
+  elif onePart == 2:
+      # Check this part without parameters inside
+      arms(body(False)[0], body(False)[1])
+      onePart += 1
+  elif onePart == 3:
+      legs()
+      onePart += 1
 
-def search(array, userLetter, k):
+def search(array, userLetter, recurNum):
     found = False
-    j = 0
-    if k == len(array):
+    if recurNum == len(array):
         pass
     else:
         for i in range(0, len(array)):
             if (array[i] == userLetter):
-                print("The entered letter is present in the word.")
-                print(array)
+                #print("The entered letter is present in the word.")
+                #print(array)
                 letter.pu()
                 letter.goto(spacesMidpoint[i], -165)
                 letter.pd()
@@ -148,31 +165,18 @@ def search(array, userLetter, k):
                 found = True
                 pass
                 # this is where we are going to write out the letters
-            elif (found != True):
-                if j == 0:
-                    head()
-                    j += 1
-                    print(j)
-                elif j == 1:
-                    body(draw)
-                    j += 1
-                    print()
-                elif j == 2:
-                    # Check this part without parameters inside
-                    arms(body(False)[0], body(False)[1])
-                    j += 1
-                elif j == 3:
-                    legs()
-                    j += 1
+            elif (found != True) and (i == len(array)-1):
+                drawHangman()
                     # type the letter
         # i+=1
-        return search(array, userLetter, k + 1)
+        return search(array, userLetter, recurNum + 1)
 
 
 def main():
-    j = 0
+    onePart = 0
     while len(word) != 0:
         userLetter = input("Enter your guess: ")
+
         search(word, userLetter, 0)
 
 
